@@ -12,6 +12,7 @@ namespace Desktop_Classwork4
 {
     public partial class Form1 : Form
     {
+        DataTable dtb = new DataTable();
         void Clear()
         {
             txtMSSV.Text = "";
@@ -22,10 +23,11 @@ namespace Desktop_Classwork4
         public Form1()
         {
             InitializeComponent();
+            this.listView1.MultiSelect = true;
             
         }
 
-        
+       
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -57,7 +59,10 @@ namespace Desktop_Classwork4
         {
            try
             {
-                listView1.Items.Remove(listView1.SelectedItems[0]);
+                foreach (ListViewItem item in listView1.Items)
+                {
+                    listView1.Items.Remove(listView1.SelectedItems[0]);
+                }
             }
             catch
             {
@@ -80,7 +85,7 @@ namespace Desktop_Classwork4
             
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e) //còn thiếu multi select
         {
             if (listView1.SelectedItems.Count==0) { return; }
 
@@ -89,6 +94,7 @@ namespace Desktop_Classwork4
             dt.Text = listView1.SelectedItems[0].SubItems[2].Text;
             txtLop.Text = listView1.SelectedItems[0].SubItems[3].Text;
 
+           
             
         }
 
@@ -100,6 +106,25 @@ namespace Desktop_Classwork4
         private void btnClear_Click(object sender, EventArgs e)
         {
             listView1.Clear();
+        }
+
+        private void btnLoadData_Click(object sender, EventArgs e)
+        {
+            string path = "D:\\TÀI LIỆU\\Phát Triển Ứng Dụng Desktop\\Buổi 4\\New Text Document.xml" ; //Sửa file này lại
+            DataSet ds = new DataSet();
+            ds.ReadXml(path);
+            dtb = ds.Tables[0];
+            dataGridView1.DataSource = dtb;
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            dtb.Rows.Add(txtMSSV.Text,txtHovaten.Text,dt.Text,txtLop.Text)  ;
         }
     }
 }
