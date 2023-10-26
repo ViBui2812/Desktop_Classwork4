@@ -12,17 +12,20 @@ namespace Desktop_Classwork4
 {
     public partial class Form1 : Form
     {
+        void Clear()
+        {
+            txtMSSV.Text = "";
+            txtHovaten.Text = "";
+            txtLop.Text = "";
+        }
+
         public Form1()
         {
             InitializeComponent();
-        }
-
-        private void btnLoad_Click(object sender, EventArgs e)
-        {
             
-
-            listView1.Items.Clear();
         }
+
+        
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -35,8 +38,6 @@ namespace Desktop_Classwork4
             listView1.Columns.Add("Ho_Ten");
             listView1.Columns.Add("Ngay_Sinh");
             listView1.Columns.Add("Lop");
-
-            
         }
 
         private void btnThem_Click(object sender, EventArgs e)
@@ -67,7 +68,11 @@ namespace Desktop_Classwork4
 
         private void btnSua_Click(object sender, EventArgs e)
         {
-            
+            if (listView1.SelectedItems.Count == 0) return;
+            listView1.SelectedItems[0].SubItems[0].Text = txtMSSV.Text;
+            listView1.SelectedItems[0].SubItems[1].Text = txtHovaten.Text;
+            listView1.SelectedItems[0].SubItems[2].Text = dt.Text;
+            listView1.SelectedItems[0].SubItems[3].Text = txtLop.Text;
         }
 
         private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -78,10 +83,23 @@ namespace Desktop_Classwork4
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count==0) { return; }
+
             txtMSSV.Text = listView1.SelectedItems[0].SubItems[0].Text;
             txtHovaten.Text = listView1.SelectedItems[0].SubItems[1].Text;
             dt.Text = listView1.SelectedItems[0].SubItems[2].Text;
             txtLop.Text = listView1.SelectedItems[0].SubItems[3].Text;
+
+            
+        }
+
+        private void btnSua_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            listView1.Clear();
         }
     }
 }
